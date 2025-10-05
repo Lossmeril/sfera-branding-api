@@ -1,12 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import type { RouteContext } from "next"; // ✅ use the built-in Next.js type
 import { elementSets, expandElementSet } from "@/lib/data";
 
-export async function GET(
-  _req: NextRequest,
-  context: RouteContext<{ id: string }>
-) {
-  const { id } = context.params;
+type tParams = Promise<{ id: string }>;
+
+export async function GET(_req: NextRequest, context: { params: tParams }) {
+  const { id } = await context.params;
 
   const set = elementSets.find((s) => s.id === Number(id));
   if (!set) {
