@@ -1,12 +1,11 @@
 import { NextResponse } from "next/server";
 import { facilitiesWithElements } from "@/lib/data";
 
-export async function GET(
-  _request: Request,
-  { params }: { params: { id: string } }
-) {
+type tParams = Promise<{ id: string }>;
+
+export async function GET(_request: Request, { params }: { params: tParams }) {
   const facility = facilitiesWithElements.find(
-    (f) => f.id === Number(params.id)
+    async (f) => f.id === Number((await params).id)
   );
 
   if (!facility) {
