@@ -1,16 +1,15 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { elementSets, expandElementSet } from "@/lib/data";
 
 export async function GET(
-  request: Request,
-  context: { params: { id: string } }
+  _req: NextRequest,
+  context: { params: Promise<{ id: string }> } | { params: { id: string } }
 ) {
-  const { id } = context.params;
+  const params = await context.params;
+  const id = Number(params.id);
 
-  const set = elementSets.find((s) => s.id === Number(id));
-  if (!set) {
-    return NextResponse.json({ error: "Not found" }, { status: 404 });
-  }
+  const set = elementSets.find((s) => s.id === id);
+  if (!set) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
   const expanded = expandElementSet(set);
   return NextResponse.json({ ...set, expanded });
