@@ -10,7 +10,7 @@ import {
   Facility,
   facilities,
   elementSets,
-  Element,
+  FinalElementSet,
 } from "./data";
 
 /**
@@ -32,35 +32,121 @@ export function generateVariants(name: string): ElementVariant[] {
 /**
  * Expand an element set into a flat list with variant URLs.
  */
-export function expandElementSet(set: ElementSet): Element[] {
+export function expandElementSet(set: ElementSet): FinalElementSet {
   // Explicitly named elements
   if (set.elements && set.elements.length > 0) {
-    return set.elements.map((el) => ({
-      ...el,
-      variants: generateVariants(el.name),
-    }));
+    return {
+      id: set.id,
+      elements: set.elements.map((el) => ({
+        ...el,
+        variants: generateVariants(el.name),
+      })),
+      facility: set.facilityId
+        ? facilities.find((f) => f.id === set.facilityId) || null
+        : null,
+      name: set.name,
+      elementCode: set.elementCode || "",
+    };
+  }
+
+  // Empty sets
+  if (
+    (!set.elements || set.elements.length === 0) &&
+    !set.elementPrefix &&
+    !set.numberOfElements
+  ) {
+    return {
+      id: 0,
+      name: "",
+      elementCode: "",
+      elements: [],
+    };
   }
 
   // Prefix-based sets
   if (set.elementPrefix && set.numberOfElements) {
-    return Array.from({ length: set.numberOfElements }, (_, i) => {
-      const name = `${set.elementPrefix}${i + 1}`;
+    const elements = Array.from({ length: set.numberOfElements }, (_, i) => {
+      const name = `${set.elementPrefix}motiv${i + 1}`;
       return { id: i + 1, name, variants: generateVariants(name) };
     });
+    return {
+      id: set.id,
+      name: set.name,
+      elementCode: set.elementCode || "",
+      elements,
+      facility: set.facilityId
+        ? facilities.find((f) => f.id === set.facilityId) || null
+        : null,
+    };
   }
 
-  return [];
+  return {
+    id: 0,
+    name: "",
+    elementCode: "",
+    elements: [],
+  };
+}
+
+export function expandElementSetNoFacilities(set: ElementSet): FinalElementSet {
+  // Explicitly named elements
+  if (set.elements && set.elements.length > 0) {
+    return {
+      id: set.id,
+      elements: set.elements.map((el) => ({
+        ...el,
+        variants: generateVariants(el.name),
+      })),
+      facility: null,
+      name: set.name,
+      elementCode: set.elementCode || "",
+    };
+  }
+
+  // Empty sets
+  if (
+    (!set.elements || set.elements.length === 0) &&
+    !set.elementPrefix &&
+    !set.numberOfElements
+  ) {
+    return {
+      id: 0,
+      name: "",
+      elementCode: "",
+      elements: [],
+    };
+  }
+
+  // Prefix-based sets
+  if (set.elementPrefix && set.numberOfElements) {
+    const elements = Array.from({ length: set.numberOfElements }, (_, i) => {
+      const name = `${set.elementPrefix}motiv${i + 1}`;
+      return { id: i + 1, name, variants: generateVariants(name) };
+    });
+    return {
+      id: set.id,
+      name: set.name,
+      elementCode: set.elementCode || "",
+      elements,
+      facility: null,
+    };
+  }
+
+  return {
+    id: 0,
+    name: "",
+    elementCode: "",
+    elements: [],
+  };
 }
 
 /**
  * Expand all element sets into a mapping.
  */
-export function expandAllElementSets(
-  sets: ElementSet[]
-): Record<number, Element[]> {
-  const expanded: Record<number, Element[]> = {};
+export function expandAllElementSets(sets: ElementSet[]): FinalElementSet[] {
+  const expanded: FinalElementSet[] = [];
   for (const set of sets) {
-    expanded[set.id] = expandElementSet(set);
+    expanded.push(expandElementSet(set));
   }
   return expanded;
 }
@@ -70,12 +156,14 @@ export function expandAllElementSets(
 // -------------------------
 
 export type FacilityWithElements = Facility & {
-  elementSets: ElementSet[];
+  elementSets: FinalElementSet[];
 };
 
 export const facilitiesWithElements: FacilityWithElements[] = facilities.map(
   (facility) => ({
     ...facility,
-    elementSets: elementSets.filter((set) => set.facilityId === facility.id),
+    elementSets: elementSets
+      .filter((set) => set.facilityId === facility.id)
+      .map((set) => expandElementSetNoFacilities(set)),
   })
 );

@@ -50,6 +50,14 @@ export type ElementSet = {
   elements?: { id: number; name: string; elementCode: string }[];
 };
 
+export type FinalElementSet = {
+  id: number;
+  name: string;
+  elementCode: string;
+  facility?: Facility | null;
+  elements: Element[];
+};
+
 export type AccentColor = {
   id: number;
   name: string;
@@ -227,13 +235,7 @@ export const elementSets: ElementSet[] = [
     id: 12,
     name: "Unique",
     facilityId: null,
-    elements: [
-      { id: 1, name: "Pokus_motiv1", elementCode: "PM.1" },
-      { id: 2, name: "Pokus_motiv2", elementCode: "PM.2" },
-      { id: 3, name: "Hra_motiv1", elementCode: "HM.1" },
-      { id: 4, name: "Hra_motiv2", elementCode: "HM.2" },
-      { id: 5, name: "Experiment_special", elementCode: "ES.1" },
-    ],
+    elements: [{ id: 1, name: "Addamsovi_motiv1", elementCode: "RA.1" }],
   },
 ];
 
