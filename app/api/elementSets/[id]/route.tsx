@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { elementSets, expandElementSet } from "@/lib/data";
+import { elementSets } from "@/lib/data";
+
+import { expandElementSet } from "@/lib/utils";
 
 type tParams = Promise<{ id: string }>;
 

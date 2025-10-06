@@ -43,10 +43,11 @@ export type Element = {
 export type ElementSet = {
   id: number;
   name: string;
+  elementCode?: string;
   facilityId?: number | null;
   elementPrefix?: string;
   numberOfElements?: number;
-  elements?: { id: number; name: string }[];
+  elements?: { id: number; name: string; elementCode: string }[];
 };
 
 export type AccentColor = {
@@ -136,6 +137,7 @@ export const elementSets: ElementSet[] = [
     elementPrefix: "Textil_",
     numberOfElements: 45,
     facilityId: 1,
+    elementCode: "T",
   },
   {
     id: 2,
@@ -143,6 +145,7 @@ export const elementSets: ElementSet[] = [
     elementPrefix: "Grafika_",
     numberOfElements: 31,
     facilityId: 2,
+    elementCode: "G",
   },
   {
     id: 3,
@@ -150,13 +153,15 @@ export const elementSets: ElementSet[] = [
     elementPrefix: "Dřevo_",
     numberOfElements: 31,
     facilityId: 3,
+    elementCode: "D",
   },
   {
     id: 4,
-    name: "Kov/Elektra",
+    name: "Kov/Elektro",
     elementPrefix: "Kov Elektro_",
     numberOfElements: 33,
     facilityId: 4,
+    elementCode: "K/E",
   },
   {
     id: 5,
@@ -164,6 +169,7 @@ export const elementSets: ElementSet[] = [
     elementPrefix: "IT VR_",
     numberOfElements: 35,
     facilityId: 5,
+    elementCode: "IT",
   },
   {
     id: 6,
@@ -171,6 +177,7 @@ export const elementSets: ElementSet[] = [
     elementPrefix: "Fyzika_",
     numberOfElements: 30,
     facilityId: 6,
+    elementCode: "F",
   },
   {
     id: 7,
@@ -178,6 +185,7 @@ export const elementSets: ElementSet[] = [
     elementPrefix: "Chemie_",
     numberOfElements: 29,
     facilityId: 7,
+    elementCode: "CH",
   },
   {
     id: 8,
@@ -185,6 +193,7 @@ export const elementSets: ElementSet[] = [
     elementPrefix: "Přírodopis_",
     numberOfElements: 36,
     facilityId: 8,
+    elementCode: "P",
   },
   {
     id: 9,
@@ -192,6 +201,7 @@ export const elementSets: ElementSet[] = [
     elementPrefix: "Hřiště_",
     numberOfElements: 30,
     facilityId: 9,
+    elementCode: "SD",
   },
   {
     id: 10,
@@ -199,6 +209,7 @@ export const elementSets: ElementSet[] = [
     elementPrefix: "SOS_",
     numberOfElements: 27,
     facilityId: 10,
+    elementCode: "S",
   },
 
   // Standalone set: Misc
@@ -208,6 +219,7 @@ export const elementSets: ElementSet[] = [
     elementPrefix: "Misc_",
     numberOfElements: 9,
     facilityId: null,
+    elementCode: "M",
   },
 
   // Standalone set: Unique (individually named)
@@ -216,11 +228,11 @@ export const elementSets: ElementSet[] = [
     name: "Unique",
     facilityId: null,
     elements: [
-      { id: 1, name: "Pokus_motiv1" },
-      { id: 2, name: "Pokus_motiv2" },
-      { id: 3, name: "Hra_motiv1" },
-      { id: 4, name: "Hra_motiv2" },
-      { id: 5, name: "Experiment_special" },
+      { id: 1, name: "Pokus_motiv1", elementCode: "PM.1" },
+      { id: 2, name: "Pokus_motiv2", elementCode: "PM.2" },
+      { id: 3, name: "Hra_motiv1", elementCode: "HM.1" },
+      { id: 4, name: "Hra_motiv2", elementCode: "HM.2" },
+      { id: 5, name: "Experiment_special", elementCode: "ES.1" },
     ],
   },
 ];
@@ -235,74 +247,3 @@ export const accentColors: AccentColor[] = [
   { id: 3, name: "Warm Orange", hex: "#f7941d" },
   { id: 4, name: "Cool Grey", hex: "#7a7a7a" },
 ];
-
-// -------------------------
-// Helper Functions
-// -------------------------
-
-/**
- * Generate all file variants for a given element name.
- */
-export function generateVariants(name: string): ElementVariant[] {
-  return (
-    Object.entries(FILE_VARIANTS) as [
-      keyof typeof FILE_VARIANTS,
-      { suffix: string; type: string }
-    ][]
-  ).map(([size, { suffix, type }]) => ({
-    size,
-    url: `${ASSET_BASE_URL}${name}${suffix}`,
-    contentType: type,
-  }));
-}
-
-/**
- * Expand an element set into a flat list with variant URLs.
- */
-export function expandElementSet(set: ElementSet): Element[] {
-  // Explicitly named elements
-  if (set.elements && set.elements.length > 0) {
-    return set.elements.map((el) => ({
-      ...el,
-      variants: generateVariants(el.name),
-    }));
-  }
-
-  // Prefix-based sets
-  if (set.elementPrefix && set.numberOfElements) {
-    return Array.from({ length: set.numberOfElements }, (_, i) => {
-      const name = `${set.elementPrefix}${i + 1}`;
-      return { id: i + 1, name, variants: generateVariants(name) };
-    });
-  }
-
-  return [];
-}
-
-/**
- * Expand all element sets into a mapping.
- */
-export function expandAllElementSets(
-  sets: ElementSet[]
-): Record<number, Element[]> {
-  const expanded: Record<number, Element[]> = {};
-  for (const set of sets) {
-    expanded[set.id] = expandElementSet(set);
-  }
-  return expanded;
-}
-
-// -------------------------
-// Joined View (Facilities + their Element Sets)
-// -------------------------
-
-export type FacilityWithElements = Facility & {
-  elementSets: ElementSet[];
-};
-
-export const facilitiesWithElements: FacilityWithElements[] = facilities.map(
-  (facility) => ({
-    ...facility,
-    elementSets: elementSets.filter((set) => set.facilityId === facility.id),
-  })
-);
