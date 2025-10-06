@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { facilitiesWithElements } from "@/lib/data";
+import { facilitiesWithElements } from "@/lib/utils";
 
 type tParams = Promise<{ id: string }>;
 
