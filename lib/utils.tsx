@@ -2,15 +2,13 @@
 // Helper Functions
 // -------------------------
 
-import { ServedElementSet, ServedFacility } from "./apiPointTypes";
 import {
+  ServedElementSet,
+  ServedFacility,
   ElementVariant,
-  FILE_VARIANTS,
-  ASSET_BASE_URL,
   ElementSet,
-  facilities,
-  elementSets,
-} from "./data";
+} from "./types";
+import { FILE_VARIANTS, ASSET_BASE_URL, facilities, elementSets } from "./data";
 
 /**
  * Generate all file variants for a given element name.
@@ -73,17 +71,20 @@ export function expandElementSet(
       const name = `${set.elementPrefix}motiv${i + 1}`;
       return { id: i + 1, name, variants: generateVariants(name) };
     });
-    return {
-      id: set.id,
-      name: set.name,
-      elementCode: set.elementCode || "",
-      elements,
-      facility: insertFacilities
-        ? set.facilityId
-          ? facilities.find((f) => f.id === set.facilityId) || null
-          : null
-        : null,
-    };
+    return removeDeprecatedElements(
+      {
+        id: set.id,
+        name: set.name,
+        elementCode: set.elementCode || "",
+        elements,
+        facility: insertFacilities
+          ? set.facilityId
+            ? facilities.find((f) => f.id === set.facilityId) || null
+            : null
+          : null,
+      },
+      set.deprecatedElements || []
+    );
   }
 
   return {
@@ -117,3 +118,19 @@ export const facilitiesWithElements: ServedFacility[] = facilities.map(
       .map((set) => expandElementSet(set, false))[0],
   })
 );
+
+/**
+ * Generate all file variants for a given element name.
+ */
+export function removeDeprecatedElements(
+  set: ServedElementSet,
+  deprecatedElements: { id: number }[]
+): ServedElementSet {
+  return {
+    ...set,
+    elements:
+      set.elements?.filter(
+        (el) => !deprecatedElements?.some((d) => d.id === el.id)
+      ) || [],
+  };
+}

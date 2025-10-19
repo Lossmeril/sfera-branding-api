@@ -2,7 +2,7 @@
 // Configuration
 // -------------------------
 
-import { AccentColor } from "./apiPointTypes";
+import { AccentColor, ElementSet, Facility } from "./types";
 
 /**
  * Base URL for serving assets.
@@ -17,39 +17,6 @@ export const FILE_VARIANTS = {
   low: { suffix: "_low.jpg", type: "image/jpeg" },
   medium: { suffix: "_med.png", type: "image/png" },
   high: { suffix: "_high.png", type: "image/png" },
-};
-
-// -------------------------
-// Types
-// -------------------------
-
-export type Facility = {
-  id: number;
-  name: string;
-  nameEn: string;
-  colorBg: string; // primary facility color
-};
-
-export type ElementVariant = {
-  size: "low" | "medium" | "high";
-  url: string;
-  contentType: string;
-};
-
-export type Element = {
-  id: number;
-  name: string;
-  variants: ElementVariant[];
-};
-
-export type ElementSet = {
-  id: number;
-  name: string;
-  elementCode?: string;
-  facilityId?: number | null;
-  elementPrefix?: string;
-  numberOfElements?: number;
-  elements?: { id: number; name: string; elementCode: string }[];
 };
 
 // -------------------------
@@ -166,6 +133,17 @@ export const elementSets: ElementSet[] = [
     numberOfElements: 35,
     facilityId: 5,
     elementCode: "IT",
+    deprecatedElements: [
+      { id: 2 },
+      { id: 8 },
+      { id: 12 },
+      { id: 15 },
+      { id: 18 },
+      { id: 19 },
+      { id: 20 },
+      { id: 23 },
+      { id: 24 },
+    ],
   },
   {
     id: 6,
@@ -182,6 +160,7 @@ export const elementSets: ElementSet[] = [
     numberOfElements: 29,
     facilityId: 7,
     elementCode: "CH",
+    deprecatedElements: [{ id: 15 }],
   },
   {
     id: 8,
