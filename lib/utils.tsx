@@ -2,16 +2,14 @@
 // Helper Functions
 // -------------------------
 
+import { ServedElementSet, ServedFacility } from "./apiPointTypes";
 import {
   ElementVariant,
   FILE_VARIANTS,
   ASSET_BASE_URL,
   ElementSet,
-  Facility,
   facilities,
   elementSets,
-  ServedElementSet,
-  ServedFacility,
 } from "./data";
 
 /**
@@ -114,7 +112,7 @@ export function expandAllElementSets(sets: ElementSet[]): ServedElementSet[] {
 export const facilitiesWithElements: ServedFacility[] = facilities.map(
   (facility) => ({
     ...facility,
-    elementSets: elementSets
+    elementSet: elementSets
       .filter((set) => set.facilityId === facility.id)
       .map((set) => expandElementSet(set, false))[0],
   })

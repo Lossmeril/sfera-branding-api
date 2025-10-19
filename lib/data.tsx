@@ -2,6 +2,8 @@
 // Configuration
 // -------------------------
 
+import { AccentColor } from "./apiPointTypes";
+
 /**
  * Base URL for serving assets.
  */
@@ -48,24 +50,6 @@ export type ElementSet = {
   elementPrefix?: string;
   numberOfElements?: number;
   elements?: { id: number; name: string; elementCode: string }[];
-};
-
-export type ServedElementSet = {
-  id: number;
-  name: string;
-  elementCode: string;
-  facility?: Facility | null;
-  elements: Element[];
-};
-
-export type ServedFacility = Facility & {
-  elementSets: ServedElementSet;
-};
-
-export type AccentColor = {
-  id: number;
-  name: string;
-  hex: string;
 };
 
 // -------------------------
