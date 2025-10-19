@@ -10,7 +10,8 @@ import {
   Facility,
   facilities,
   elementSets,
-  FinalElementSet,
+  ServedElementSet,
+  ServedFacility,
 } from "./data";
 
 /**
@@ -32,8 +33,11 @@ export function generateVariants(name: string): ElementVariant[] {
 /**
  * Expand an element set into a flat list with variant URLs.
  */
-export function expandElementSet(set: ElementSet): FinalElementSet {
-  // Explicitly named elements
+
+export function expandElementSet(
+  set: ElementSet,
+  insertFacilities?: boolean
+): ServedElementSet {
   if (set.elements && set.elements.length > 0) {
     return {
       id: set.id,
@@ -41,8 +45,10 @@ export function expandElementSet(set: ElementSet): FinalElementSet {
         ...el,
         variants: generateVariants(el.name),
       })),
-      facility: set.facilityId
-        ? facilities.find((f) => f.id === set.facilityId) || null
+      facility: insertFacilities
+        ? set.facilityId
+          ? facilities.find((f) => f.id === set.facilityId) || null
+          : null
         : null,
       name: set.name,
       elementCode: set.elementCode || "",
@@ -74,61 +80,11 @@ export function expandElementSet(set: ElementSet): FinalElementSet {
       name: set.name,
       elementCode: set.elementCode || "",
       elements,
-      facility: set.facilityId
-        ? facilities.find((f) => f.id === set.facilityId) || null
+      facility: insertFacilities
+        ? set.facilityId
+          ? facilities.find((f) => f.id === set.facilityId) || null
+          : null
         : null,
-    };
-  }
-
-  return {
-    id: 0,
-    name: "",
-    elementCode: "",
-    elements: [],
-  };
-}
-
-export function expandElementSetNoFacilities(set: ElementSet): FinalElementSet {
-  // Explicitly named elements
-  if (set.elements && set.elements.length > 0) {
-    return {
-      id: set.id,
-      elements: set.elements.map((el) => ({
-        ...el,
-        variants: generateVariants(el.name),
-      })),
-      facility: null,
-      name: set.name,
-      elementCode: set.elementCode || "",
-    };
-  }
-
-  // Empty sets
-  if (
-    (!set.elements || set.elements.length === 0) &&
-    !set.elementPrefix &&
-    !set.numberOfElements
-  ) {
-    return {
-      id: 0,
-      name: "",
-      elementCode: "",
-      elements: [],
-    };
-  }
-
-  // Prefix-based sets
-  if (set.elementPrefix && set.numberOfElements) {
-    const elements = Array.from({ length: set.numberOfElements }, (_, i) => {
-      const name = `${set.elementPrefix}motiv${i + 1}`;
-      return { id: i + 1, name, variants: generateVariants(name) };
-    });
-    return {
-      id: set.id,
-      name: set.name,
-      elementCode: set.elementCode || "",
-      elements,
-      facility: null,
     };
   }
 
@@ -143,10 +99,10 @@ export function expandElementSetNoFacilities(set: ElementSet): FinalElementSet {
 /**
  * Expand all element sets into a mapping.
  */
-export function expandAllElementSets(sets: ElementSet[]): FinalElementSet[] {
-  const expanded: FinalElementSet[] = [];
+export function expandAllElementSets(sets: ElementSet[]): ServedElementSet[] {
+  const expanded: ServedElementSet[] = [];
   for (const set of sets) {
-    expanded.push(expandElementSet(set));
+    expanded.push(expandElementSet(set, true));
   }
   return expanded;
 }
@@ -155,15 +111,11 @@ export function expandAllElementSets(sets: ElementSet[]): FinalElementSet[] {
 // Joined View (Facilities + their Element Sets)
 // -------------------------
 
-export type FacilityWithElements = Facility & {
-  elementSets: FinalElementSet[];
-};
-
-export const facilitiesWithElements: FacilityWithElements[] = facilities.map(
+export const facilitiesWithElements: ServedFacility[] = facilities.map(
   (facility) => ({
     ...facility,
     elementSets: elementSets
       .filter((set) => set.facilityId === facility.id)
-      .map((set) => expandElementSetNoFacilities(set)),
+      .map((set) => expandElementSet(set, false))[0],
   })
 );

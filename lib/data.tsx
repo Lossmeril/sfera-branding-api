@@ -50,12 +50,16 @@ export type ElementSet = {
   elements?: { id: number; name: string; elementCode: string }[];
 };
 
-export type FinalElementSet = {
+export type ServedElementSet = {
   id: number;
   name: string;
   elementCode: string;
   facility?: Facility | null;
   elements: Element[];
+};
+
+export type ServedFacility = Facility & {
+  elementSets: ServedElementSet;
 };
 
 export type AccentColor = {
