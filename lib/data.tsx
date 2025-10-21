@@ -197,12 +197,32 @@ export const elementSets: ElementSet[] = [
     elementCode: "M",
   },
 
-  // Standalone set: Unique (individually named)
+  // Standalone set: Unique
   {
     id: 12,
     name: "Unique",
     facilityId: null,
-    elements: [{ id: 1, name: "Addamsovi_motiv1", elementCode: "RA.1" }],
+    elements: [
+      { id: 1, name: "Addamsovi_motiv1", elementCode: "RA.1" },
+      { id: 2, name: "Tajuplný ostrov_motiv1", elementCode: "TO.1" },
+      { id: 3, name: "Tajuplný ostrov_motiv2", elementCode: "TO.2" },
+      { id: 4, name: "Tajuplný ostrov_motiv3", elementCode: "TO.3" },
+      { id: 5, name: "Tajuplný ostrov_motiv4", elementCode: "TO.4" },
+      { id: 6, name: "Vikingové_motiv1", elementCode: "V.1" },
+      { id: 7, name: "Vikingové_motiv2", elementCode: "V.2" },
+      { id: 8, name: "Vikingové_motiv3", elementCode: "V.3" },
+      { id: 9, name: "Vikingové_motiv4", elementCode: "V.4" },
+      { id: 10, name: "Sherlock_motiv1", elementCode: "SH.1" },
+      { id: 11, name: "Sherlock_motiv2", elementCode: "SH.2" },
+      { id: 12, name: "Plachetnice_motiv1", elementCode: "PL.1" },
+      { id: 13, name: "Přemyslovci_motiv1", elementCode: "PŘ.1" },
+      { id: 14, name: "ŠKODA_motiv1", elementCode: "ŠK.1" },
+      { id: 15, name: "Tandem_motiv1", elementCode: "TV.1" },
+      { id: 16, name: "Viva la Textilia_motiv1", elementCode: "TF.1" },
+      { id: 17, name: "Viva la Textilia_motiv2", elementCode: "TF.2" },
+      { id: 18, name: "Viva la Textilia_motiv3", elementCode: "TF.3" },
+      { id: 19, name: "Viva la Textilia_motiv4", elementCode: "TF.4" },
+    ],
   },
 ];
 
