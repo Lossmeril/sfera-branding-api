@@ -44,8 +44,12 @@ export type ServedFacility = Facility & {
   elementSet: ServedElementSet;
 };
 
-export type AccentColor = {
+export type Color = {
   id: number;
   name: string;
+  nameSimple: string;
+
   hex: string;
+  rgb: string;
+  cmyk: string;
 };

@@ -2,7 +2,7 @@
 // Configuration
 // -------------------------
 
-import { AccentColor, ElementSet, Facility } from "./types";
+import { Color, ElementSet, Facility } from "./types";
 
 /**
  * Base URL for serving assets.
@@ -230,9 +230,96 @@ export const elementSets: ElementSet[] = [
 // Accent Colors (Global Palette)
 // -------------------------
 
-export const accentColors: AccentColor[] = [
-  { id: 1, name: "Primary Blue", hex: "#0055ff" },
-  { id: 2, name: "Secondary Green", hex: "#3fa535" },
-  { id: 3, name: "Warm Orange", hex: "#f7941d" },
-  { id: 4, name: "Cool Grey", hex: "#7a7a7a" },
+export const accentColors: Color[] = [
+  {
+    id: 0,
+    name: "Podkladová bílá",
+    nameSimple: "Bílá",
+
+    hex: "#ffffff",
+    rgb: "255, 255, 255",
+    cmyk: "0, 0, 0, 0",
+  },
+  {
+    id: 1,
+    name: "Podkladová růžová",
+    nameSimple: "Růžová",
+
+    hex: "#f7cadf",
+    rgb: "247, 202, 223",
+    cmyk: "0, 20, 0, 0",
+  },
+  {
+    id: 2,
+    name: "Podkladová červená",
+    nameSimple: "Červená",
+
+    hex: "#fac5aa",
+    rgb: "250, 197, 170",
+    cmyk: "0, 21, 25, 0",
+  },
+  {
+    id: 3,
+    name: "Podkladová oranžová",
+    nameSimple: "Oranžová",
+    hex: "#fedbb3",
+    rgb: "254, 219, 179",
+    cmyk: "0, 12, 25, 0",
+  },
+  {
+    id: 4,
+    name: "Podkladová žlutá",
+    nameSimple: "Žlutá",
+    hex: "#fffa9e",
+    rgb: "255, 250, 158",
+    cmyk: "0, 0, 40, 0",
+  },
+  {
+    id: 5,
+    name: "Podkladová zelinkavá",
+    nameSimple: "Zelinkavá",
+    hex: "#e1eebf",
+    rgb: "225, 238, 191",
+    cmyk: "10, 0, 25, 0",
+  },
+  {
+    id: 6,
+    name: "Podkladová zelená",
+    nameSimple: "Zelená",
+    hex: "#b7dca9",
+    rgb: "183, 220, 169",
+    cmyk: "10, 0, 25, 0",
+  },
+  {
+    id: 7,
+    name: "Podkladová modrá",
+    nameSimple: "Modrá",
+    hex: "#8dd5f8",
+    rgb: "141, 213, 248",
+    cmyk: "35, 0, 0, 0",
+  },
+  {
+    id: 8,
+    name: "Podkladová fialová",
+    nameSimple: "Fialová",
+    hex: "#a2adcd",
+    rgb: "162, 173, 205",
+    cmyk: "30, 20, 5, 0",
+  },
+  {
+    id: 9,
+    name: "Podkladová hnědá",
+    nameSimple: "Hnědá",
+    hex: "#c2b5aa",
+    rgb: "194, 181, 170",
+    cmyk: "20, 20, 25, 0",
+  },
+  {
+    id: 10,
+    name: "Podkladová šedá",
+    nameSimple: "Šedá",
+    hex: "#cacaca",
+    rgb: "202, 202, 202",
+    cmyk: "0, 0, 0, 20",
+  },
 ];
