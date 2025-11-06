@@ -11,11 +11,11 @@ export const ASSET_BASE_URL =
   process.env.ASSET_BASE_URL || "https://branding.sferagrafika.eu/assets/";
 
 /**
- * Filenames use suffixes: _low, _med, _high
+ * Filenames use suffixes: _low, _medium, _high
  */
 export const FILE_VARIANTS = {
   low: { suffix: "_low.jpg", type: "image/jpeg" },
-  medium: { suffix: "_med.png", type: "image/png" },
+  medium: { suffix: "_medium.png", type: "image/png" },
   high: { suffix: "_high.png", type: "image/png" },
 };
 
@@ -106,7 +106,7 @@ export const elementSets: ElementSet[] = [
     id: 2,
     name: "Grafika",
     elementPrefix: "Grafika_",
-    numberOfElements: 31,
+    numberOfElements: 36,
     facilityId: 2,
     elementCode: "G",
   },
@@ -114,7 +114,7 @@ export const elementSets: ElementSet[] = [
     id: 3,
     name: "Dřevo",
     elementPrefix: "Dřevo_",
-    numberOfElements: 31,
+    numberOfElements: 32,
     facilityId: 3,
     elementCode: "D",
   },
@@ -122,7 +122,7 @@ export const elementSets: ElementSet[] = [
     id: 4,
     name: "Kov/Elektro",
     elementPrefix: "Kov Elektro_",
-    numberOfElements: 33,
+    numberOfElements: 35,
     facilityId: 4,
     elementCode: "K/E",
   },
@@ -130,7 +130,7 @@ export const elementSets: ElementSet[] = [
     id: 5,
     name: "IT/VR",
     elementPrefix: "IT VR_",
-    numberOfElements: 35,
+    numberOfElements: 38,
     facilityId: 5,
     elementCode: "IT",
     deprecatedElements: [
@@ -141,7 +141,6 @@ export const elementSets: ElementSet[] = [
       { id: 18 },
       { id: 19 },
       { id: 20 },
-      { id: 23 },
       { id: 24 },
     ],
   },
@@ -166,7 +165,7 @@ export const elementSets: ElementSet[] = [
     id: 8,
     name: "Přírodopis",
     elementPrefix: "Přírodopis_",
-    numberOfElements: 36,
+    numberOfElements: 43,
     facilityId: 8,
     elementCode: "P",
   },
@@ -174,7 +173,7 @@ export const elementSets: ElementSet[] = [
     id: 9,
     name: "Hřiště",
     elementPrefix: "Hřiště_",
-    numberOfElements: 30,
+    numberOfElements: 32,
     facilityId: 9,
     elementCode: "SD",
   },
@@ -222,6 +221,11 @@ export const elementSets: ElementSet[] = [
       { id: 17, name: "Viva la Textilia_motiv2", elementCode: "TF.2" },
       { id: 18, name: "Viva la Textilia_motiv3", elementCode: "TF.3" },
       { id: 19, name: "Viva la Textilia_motiv4", elementCode: "TF.4" },
+      { id: 20, name: "Táborák_motiv1", elementCode: "ST.1" },
+      { id: 21, name: "Mechový obrázek_motiv1", elementCode: "MO.1" },
+      { id: 22, name: "Mechový obrázek_motiv2", elementCode: "MO.2" },
+      { id: 23, name: "Vánoční věnec_motiv1", elementCode: "VV.1" },
+      { id: 24, name: "Věnec s ptáčkem_motiv1", elementCode: "VP.1" },
     ],
   },
 ];
