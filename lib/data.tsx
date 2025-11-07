@@ -220,12 +220,12 @@ export const elementSets: ElementSet[] = [
       { id: 16, name: "Viva la Textilia_motiv1", elementCode: "TF.1" },
       { id: 17, name: "Viva la Textilia_motiv2", elementCode: "TF.2" },
       { id: 18, name: "Viva la Textilia_motiv3", elementCode: "TF.3" },
-      { id: 19, name: "Viva la Textilia_motiv4", elementCode: "TF.4" },
       { id: 20, name: "Táborák_motiv1", elementCode: "ST.1" },
       { id: 21, name: "Mechový obrázek_motiv1", elementCode: "MO.1" },
       { id: 22, name: "Mechový obrázek_motiv2", elementCode: "MO.2" },
       { id: 23, name: "Vánoční věnec_motiv1", elementCode: "VV.1" },
       { id: 24, name: "Věnec s ptáčkem_motiv1", elementCode: "VP.1" },
+      { id: 25, name: "Piktogram_motiv1", elementCode: "PI.1" },
     ],
   },
 ];
